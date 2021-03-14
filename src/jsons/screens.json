@@ -1,0 +1,376 @@
+{
+  "accueil": {
+    "id": "accueil",
+    "title": "Apprenons à nous connaître un peu, que recherchez-vous ?",
+    "short_title": "Que cherchez-vous ?",
+    "icon" : "",
+    "why": "",
+    "type": "radio",
+    "validation_button": 0,
+    "skip_button": 0,
+    "previous_button": 0,
+    "inputs":[
+      {
+        "id":         "type_residence",
+        "type":       "radio",
+        "action":     "goToNextScreenOnClick",
+        "traitement": "None",
+        "values": [
+          {
+            "text":         "Votre nouvelle résidence principale",
+            "value":        "residence_principale",
+            "next_screen":  "screen_kids",
+            "operation":    "="
+          },
+          {
+            "text":         "La résidence secondaire de vos rêves",
+            "value":        "residence_secondaire",
+            "next_screen":  "screen_distance",
+            "operation":    "="
+          },
+          {
+            "text":         "La maison de vos prochaines vacances",
+            "value":        "residence_vacances",
+            "next_screen":  "screen_terrain",
+            "operation":    "="
+          }
+        ]
+      }
+    ]
+  },
+ "screen_residence_principale": {
+    "id": "screen_residence_principale",
+    "title": "Très bien, vous souhaitez une résidence principale...",
+    "short_title": "Proximité",
+    "why": "Nous vous posons cette question afin de déterminer le lieu adéquat pour votre résidence principale",
+    "type": "radio",
+    "validation_button" : 0,
+    "inputs":[
+      {
+        "id":         "distance_residence_principale",
+        "type":       "radio",
+        "action":     "goToNextScreenOnClick",
+        "traitement": "None",
+        "values": [
+          {
+            "text":         "A proximité de votre résidence actuelle",
+            "value":        "close_to",
+            "operation":    "=",
+            "next_screen":  "screen_code_postal"
+          },
+          {
+            "text":       "Loin de votre résidence actuelle",
+            "value":        "far_to",
+            "operation":    "=",
+            "next_screen":  "screen_code_postal"
+          },
+          {
+            "text":       "Je n'ai pas de préférence",
+            "value":        "nevermind",
+            "operation":    "=",
+            "next_screen":  "screen_terrain"
+          }
+        ]
+      }
+    ]
+  },
+ "screen_kids_details": {
+    "id": "screen_kids",
+    "title": "Dans quel cursus ?",
+    "short_title": "Cursus",
+    "why": "Nous vous posons cette question afin de déterminer l'importance des infrastuctures dédiées à l'éducation dans votre classement.",
+    "type": "checkbox",
+    "next_screen":  "screen_residence_principale",
+    "validation_button" : 1,
+    "inputs":[
+      {
+        "id":         "kids_creche",
+        "text":       "Crèche",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "kids_primaire",
+        "text":       "Primaire",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "kids_elementaire",
+        "text":       "Élémentaire",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "kids_college",
+        "text":       "Collège",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "kids_lycee",
+        "text":       "Lycée",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      }
+    ]
+  },
+ "screen_terrain": {
+    "id": "screen_terrain",
+    "title": "Je note ! Et sinon, vous préférez être ?",
+    "short_title": "Environnement & Géographie",
+    "why": "Nous vous posons cette question afin de déterminer les régions dont le relief vous conviendra le mieux et ne pas vous envoyer en Alsace si vous voulez être à côté de l'océan...",
+    "type": "ranking",
+    "validation_button" :  1,
+    "next_screen" : "screen_densite",
+    "inputs":[
+      {
+        "id":         "scoreMontagne",
+        "text":       "Montagne",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  ""
+      },
+      {
+        "id":         "scoreLittoral",
+        "text":       "Océan / mer",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  ""
+      },
+      {
+        "id":         "scoreCampagne",
+        "text":       "Forêt",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  ""
+      },
+      {
+        "id":         "scoreVille",
+        "text":       "Plaine",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  ""
+      }
+    ]
+  },
+ "screen_densite": {
+    "id": "screen_densite",
+    "title": "Parfait ! Et sinon, vous préférez être ?",
+    "short_title": "Densité",
+    "why": "Nous vous posons cette question afin de déterminer les communes qui vous plairont le plus et ne pas vous proposer un appartement à Paris alors que vous cherchez une ferme en Corrèze.",
+    "validation_button" : 0,
+    "next_screen" : "screen_meteo",
+    "type": "radio",
+    "inputs":[
+      {
+        "id":         "scoreTailleVille",
+        "type":       "radio",
+        "traitement": "filtre",
+        "action":     "goToNextScreenOnClick",
+        "values": [
+          {
+            "id": "au_vert",
+            "text": "Au vert",
+            "value": [40,60],
+            "operation":  "between"
+          },
+          {
+            "id": "petite_ville",
+            "text": "Dans une petite ville",
+            "value": [20,40],
+            "operation":  "between"
+          },
+          {
+            "id": "grande_ville",
+            "text": "Dans une grande ville",
+            "value": 20,
+            "operation":  "<"
+          }
+        ]
+      }
+    ]
+  },
+ "screen_meteo": {
+    "id": "screen_meteo",
+    "title":  "Okay ! La météo, c'est pour vous...",
+    "short_title": "Météo",
+    "why": "Nous vous posons cette question afin de déterminer le climat qui vous conviendra et ne pas vous envoyer à Perpignan alors que vous adorez le climat breton.",
+    "validation_button" : 1,
+    "next_screen" : "screen_code_postal",
+    "type": "input",
+    "inputs": [
+      {
+        "id":         "meteo",
+        "action":     "None",
+        "traitement": "score",
+        "text":       "",
+        "type":       "slider",
+        "values": [
+          {
+            "text": "J'adore la pluie, sérieusement",
+            "operation": "<=",
+            "value": 4
+          },
+          {
+            "text": "Ce n'est pas le plus important",
+            "operation": ">",
+            "value": 5
+          },
+          {
+            "text": "J'aime bien lorsqu'il fait beau, tout de même",
+            "operation": ">",
+            "value": 6
+          },
+          {
+            "text": "Du beau temps, tout le temps",
+            "operation": ">",
+            "value": 8
+          }
+        ]
+      }
+    ]
+  },
+ "screen_distance": {
+    "id": "screen_distance",
+    "title":  "Quel est le temps de trajet maximum que vous êtes prêt à faire pour aller dans votre résidence, en voiture ?",
+    "short_title": "Temps de trajet maximum",
+    "why": "Nous vous posons cette question afin de déterminer l\"importance du temps de trajet pour vous rendre dans votre résidence secondaire.",
+    "validation_button" : 1,
+    "next_screen" : "screen_code_postal",
+    "type": "input",
+    "inputs": [
+      {
+        "id":         "residence_principale_temps_trajet_max",
+        "action":     "None",
+        "traitement": "distance",
+        "text":       "",
+        "type":       "slider",
+        "values": [
+          {
+            "text": "<= 30 minutes",
+            "operation": "<=",
+            "value": 30
+          },
+          {
+            "text": "<= 1h",
+            "operation": "<=",
+            "value": 60
+          },
+          {
+            "text": "<= 1h30",
+            "operation": "<=",
+            "value": 90
+          },
+          {
+            "text": "<= 2h",
+            "operation": "<=",
+            "value": 120
+          },
+          {
+            "text": "<= 2h30",
+            "operation": "<=",
+            "value": 150
+          },
+          {
+            "text": "<= 3h",
+            "operation": "<=",
+            "value": 180
+          },
+          {
+            "text": "<= 4h",
+            "operation": "<=",
+            "value": 240
+          },
+          {
+            "text": ">= 5 heures",
+            "operation": ">=",
+            "value": 300
+          }
+        ]
+      }
+    ]
+  },
+ "screen_code_postal": {
+    "id": "screen_code_postal",
+    "title": "Quel est votre code postal ?",
+    "short_title": "Votre code postal",
+    "why": "Nous vous posons cette question afin de déterminer l\"importance du temps de trajet pour vous rendre dans votre résidence secondaire.",
+    "type": "input",
+    "validation_button" : 1,
+    "next_screen" : "screen_terrain",
+    "inputs": [
+      {
+        "id":         "residence_principale_code_postal",
+        "action":     "",
+        "traitement": "distance",
+        "operation":  "=",
+        "type":       "text"
+      }
+    ]
+  },
+ "screen_filtre": {
+    "id":                 "screen_filtre",
+    "title":              "Avez-vous des préférences ?",
+    "short_title":         "Divers",
+    "type":               "checkbox",
+    "validation_button" :  1,
+    "why":            "...",
+    "next_screen" :        "screen_final",
+    "inputs":[
+      {
+        "id":         "isParcNational",
+        "text":       "Dans un parc national",
+        "order":      "",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "isPBVDF",
+        "text":       "Plus beau village de France uniquement",
+        "order":      "",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "isFastInternet",
+        "text":       "Super internet de fou",
+        "order":      "",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "isTempsDeChiotte",
+        "text":       "Temps de chiotte",
+        "order":      "",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      }
+    ]
+  },
+ "screen_final": {
+    "id":         "screen_final",
+    "title":      "Fini ! Prêt à voir les résultats ?",
+    "why":   "",
+
+    "inputs":[]
+  }
+}

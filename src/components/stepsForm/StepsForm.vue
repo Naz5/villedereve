@@ -1,62 +1,219 @@
 <template>
-<div class="steps-form">
-  <VdrMenu />
-  <div class="steps-form-container">
-    <div class="steps-form-icons"></div>
-    <div class="steps-form-content">
-      <div class="question-box">
-        <div class="girl-photo">
-          <img src="../../assets/girl-photo.svg" alt="girl-photo">
+  <div class="steps-form-wrapper">
+    <div v-if="currentScreenData" class="steps-form">
+      <VdrMenu />
+      <div class="steps-form-container">
+        <div class="steps-form-icons">
+          <VdrStepMenu
+              :currentStep="steps[currentStepIndex]"
+              :passedSteps="passedSteps"
+              @goBack="goBack"
+          />
         </div>
-        <div class="info">
-          <div class="name">Anaitis</div>
-          <div class="question">Très bien ! Vous souhaitez une nouvelle résidence principale...</div>
-        </div>
-      </div>
-      <div class="question-item">
-        <div class="question-inputs">
-          <StepOne/>
-        </div>
-        <div class="question-next-btn nex-btn">
-          <div>
-            <img src="../../assets/right-arrow.svg" alt="right-arrow">
-          <div>Passer</div>
+        <div class="steps-form-content">
+          <div class="question-box">
+            <div class="girl-photo">
+              <img src="../../assets/girl-photo.svg" alt="girl-photo">
+            </div>
+            <div class="info">
+              <div class="name">Anaitis</div>
+              <div class="question">{{ this.currentScreenData.title }}</div>
+            </div>
           </div>
-        </div>
-      </div>
-      <div class="flex-wrapper">
-        <div class="why-box">
-          <div class="why-icon">
-            <img src="../../assets/why-icon.svg" alt="why-icon">
-            <div class="why-icon-text">Mais pourquoi ?</div>
+          <div class="question-item">
+            <div class="question-inputs">
+              <component
+                  :is="steps[currentStepIndex].component"
+                  v-bind="{stepData: currentScreenData, passedStepData: currentPassedStep}"
+                  @nextStep="nextStep"
+              />
+            </div>
+            <div v-if="currentStepIndex !== steps.length-1" @click="nextStep()" class="question-next-btn nex-btn">
+              <div>
+                <img src="../../assets/right-arrow.svg" alt="right-arrow">
+                <div>Passer</div>
+              </div>
+            </div>
           </div>
-          <div class="why-text">Nous vous posons cette question afin de déterminer l'importance du temps de trajet pour
-            vous rendre dans votre résidence secondaire.
+          <div class="flex-wrapper">
+            <div v-if="currentScreenData.why" class="why-box">
+              <div class="why-icon">
+                <img src="../../assets/why-icon.svg" alt="why-icon">
+                <div class="why-icon-text">Mais pourquoi ?</div>
+              </div>
+              <div class="why-text">{{this.currentScreenData.why}}</div>
+            </div>
+            <div v-if="!lastStep" @click="nextStep()" class="question-next-btn mob-nex-btn">
+              <div>
+                <img src="../../assets/right-arrow.svg" alt="right-arrow">
+                <div>Passer</div>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="question-next-btn mob-nex-btn">
-          <div>
-            <img src="../../assets/right-arrow.svg" alt="right-arrow">
-            <div>Passer</div>
+          <div v-if="passedSteps.length > 1 &&  !(firstStep || lastStep)" class="mob-prev-answers">
+            <div class="title">Your previous answers</div>
+            <VdrStepMenu
+                :rowDirection="true"
+                :currentStep="steps[currentStepIndex]"
+                :passedSteps="passedSteps"
+                @goBack="goBack"
+            />
           </div>
         </div>
       </div>
     </div>
+    <div class="mob-background-img"></div>
   </div>
-</div>
 </template>
 
 <script>
 import VdrMenu from "@/components/menu/VdrMenu";
 
 import StepOne from "@/components/stepsForm/StepOne";
+import StepTwo from "@/components/stepsForm/StepTwo";
+import StepThree from "@/components/stepsForm/StepThree";
+import StepFour from "@/components/stepsForm/StepFour";
+import StepFive from "@/components/stepsForm/StepFive";
+import StepSix from "@/components/stepsForm/StepSix";
+import StepSeven from "@/components/stepsForm/StepSeven";
+ import StepEight from "@/components/stepsForm/StepEight";
+import StepNine from "@/components/stepsForm/StepNine";
+import StepTen from "@/components/stepsForm/StepTen";
+
+import Screens from '../../jsons/screens.json';
+import VdrStepMenu from "@/components/stepsForm/stepMenu/VdrStepMenu.vue";
 
 export default {
+
+
 name: "StepsForm",
-components: {
+components:   {
   VdrMenu,
-  StepOne
-}
+  StepOne,
+   StepTwo,
+   StepThree,
+  StepFour,
+  StepFive,
+  StepSix,
+ StepSeven,
+  StepEight,
+  StepNine,
+  StepTen,
+  VdrStepMenu
+},
+  data: function ()  {
+    return {
+      currentStepIndex: 0,
+      passedSteps: [],
+      steps: [
+        {
+          id: 'accueil',
+          component: StepOne
+        },
+        {
+          id: 'screen_distance',
+          component: StepTwo
+        },
+        {
+          id: 'screen_code_postal',
+          component: StepThree
+        },
+        {
+          id: 'screen_residence_principale',
+          component: StepFour
+        },
+        {
+          id: 'screen_kids',
+          component: StepFive
+        },
+        {
+          id: 'screen_terrain',
+          component: StepSix
+        },
+        {
+          id: 'screen_densite',
+          component: StepSeven
+        },
+        {
+          id: 'screen_meteo',
+          component: StepEight
+        },
+        {
+          id: 'screen_filtre',
+          component: StepNine
+        },
+        {
+          id: 'screen_final',
+          component: StepTen
+        }
+      ],
+      currentScreenData: null,
+      isCurrentStepSkipped: false
+    }
+
+  },
+  methods: {
+    goBack(backStepId) {
+      this.currentStepIndex = this.getStepIndexById(backStepId);
+    },
+    nextStep(nextStepId = null, data = null)  {
+      let alreadyPassedStepIndex = this.passedSteps
+          .findIndex(step => step.id === this.steps[this.currentStepIndex].id);
+
+      const skippedData = {
+        apiValue: null,
+        shortTitle: this.currentScreenData['short_title'],
+        shortValue: null
+      }
+
+      if(alreadyPassedStepIndex >= 0){
+        this.passedSteps[alreadyPassedStepIndex].data = data ?? skippedData;
+        this.passedSteps = this.passedSteps.slice(0, this.currentStepIndex  +1)
+      } else {
+        this.passedSteps.push(this.getPassedStep(data ?? skippedData))
+
+      }
+
+      const nextStepIndex = nextStepId ? this.getStepIndexById(nextStepId) : this.currentStepIndex+1;
+
+      if(nextStepIndex && nextStepIndex <= this.steps.length-1){
+        this.currentStepIndex = nextStepIndex;
+      }
+
+    },
+    getScreenData(){
+      this.currentScreenData = Object.values(Screens)
+          .find(screen => this.steps[this.currentStepIndex].id === screen.id);
+    },
+    getPassedStep(data) {
+     let passedStep = this.steps[this.currentStepIndex];
+     passedStep.data = data;
+     return passedStep
+    },
+
+    getStepIndexById(stepId){
+       return this.steps.findIndex(step => step.id === stepId);
+    }
+  },
+  watch: {
+    currentStepIndex: function () {
+      this.getScreenData()
+    }
+  },
+  computed: {
+  currentPassedStep: function (){
+    return this.passedSteps.find(passedStep => passedStep.id === this.steps[this.currentStepIndex].id) ?? null
+  },
+    firstStep: function (){
+      return this.currentStepIndex === 0
+    },
+  lastStep: function (){
+    return this.currentStepIndex === this.steps.length-1
+  }
+  },
+  mounted() {
+    this.getScreenData()
+  }
 }
 </script>
 
@@ -64,19 +221,16 @@ components: {
 @import "../../styles/variables";
 
 .steps-form-container{
-  height: calc(100vh - 90px);
+  min-height: calc(100vh - 90px);
   margin-top: 90px;
   width: 100%;
-  padding: 15px 214px 15px 15px;
+  padding: 15px 190px 15px 70px;
   box-sizing: border-box;
   background-image: url("../../assets/background_steps.svg");
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
   display: flex;
-  .steps-form-icons{
-    width: 110px;
-  }
   .steps-form-content{
     width: 100%;
     padding: 60px 15px;
@@ -112,7 +266,7 @@ components: {
       }
       .question-next-btn{
         display: flex;
-        align-items: flex-end;
+        align-items: center;
         margin-left: 20px;
         font-family: 'Inter', serif;
         font-size: 12px;
@@ -130,7 +284,8 @@ components: {
     .flex-wrapper{
       display: flex;
       .why-box{
-        display: none;
+        display: flex;
+        align-items: center;
         width: 80%;
         margin: 25px auto;
         .why-icon{
@@ -159,73 +314,116 @@ components: {
       }
     }
 
+    .mob-prev-answers{
+      display: none;
+      width: 100%;
+      .title{
+        font-size: 16px;
+        color: $dark-blue-gray-color;
+        font-family: 'Josefin', serif;
+       text-align: center;
+
+      }
+    }
+
   }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 1200px) {
   .steps-form-container{
-    background-image: url("../../assets/mob_background_steps.svg");
-    background-size: 100% 52%;
-    padding: 15px 10px;
-    .steps-form-icons{
-      display: none;
-    }
-    .steps-form-content{
-      padding: 0;
-      .question-box{
-        display: flex;
-        margin-bottom: 20px;
-        .girl-photo{
-          img{
-            width: 83px;
-            height: 83px;
-          }
-        }
-        .info{
-          .name{
-            font-size: 16px;
-          }
-          .question{
-            font-size: 12px;
-          }
-        }
+    padding-right: 90px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .steps-form-container{
+    padding-right: 15px;
+  }
+}
+
+@media screen and (max-width: 830px) {
+  .steps-form-wrapper{
+    .steps-form-container{
+      background-image: none;
+      min-height: auto;
+      padding: 15px 10px;
+      .steps-form-icons{
+        display: none;
       }
-      .question-item{
-        margin-left: 0;
-        .nex-btn{
-          display: none;
-        }
-        .question-inputs{
-          width: 100%;
-        }
-      }
-      .flex-wrapper{
-        align-items: center;
-        justify-content: flex-end;
-        .why-box{
-          .why-icon{
-            .why-icon-text{
+      .steps-form-content{
+        padding: 0;
+        .question-box{
+          display: flex;
+          margin-bottom: 20px;
+          .girl-photo{
+            img{
+              width: 83px;
+              height: 83px;
+            }
+          }
+          .info{
+            .name{
+              font-size: 16px;
+            }
+            .question{
               font-size: 12px;
             }
           }
-          .why-text{
-            font-size: 8px;
+        }
+        .question-item{
+          margin-left: 0;
+          .nex-btn{
+            display: none;
+          }
+          .question-inputs{
+            width: 100%;
           }
         }
-        .mob-nex-btn{
+        .flex-wrapper{
+          align-items: center;
+          justify-content: flex-end;
+          .why-box{
+            .why-icon{
+              .why-icon-text{
+                font-size: 12px;
+              }
+            }
+            .why-text{
+              font-size: 8px;
+            }
+          }
+          .mob-nex-btn{
+            display: block;
+          }
+          .question-next-btn{
+            font-size: 10px;
+            img{
+              width: 38px;
+              height: 38px;
+            }
+          }
+        }
+        .mob-prev-answers{
           display: block;
         }
-        .question-next-btn{
-          font-size: 10px;
-          img{
-            width: 38px;
-            height: 38px;
-          }
-        }
+
       }
-
-
+    }
+    .mob-background-img{
+      background-image: url("../../assets/mob_background_steps.svg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: bottom;
+      height: 580px;
+      width: 100%;
     }
   }
+
+}
+
+@media screen and (max-width: 500px) {
+  .mob-background-img{
+    height: 396px !important;
+}
 }
 </style>

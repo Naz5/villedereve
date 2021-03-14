@@ -1,23 +1,51 @@
 <template>
-<div class="step-one">
-  <div class="residence-card">
-    <img src="../../assets/stepOne/cottage.svg" alt="cottage">
-    <div class="residence-name">La résidence secondaire de vos rèves</div>
-  </div>
-  <div class="residence-card">
-    <img src="../../assets/stepOne/resident.svg" alt="resident">
-    <div class="residence-name">Votre nouvelle résidence principale</div>
-  </div>
-  <div class="residence-card">
-    <img src="../../assets/stepOne/vacation.svg" alt="vacation">
-    <div class="residence-name">La maison de vos vacances</div>
+<div v-if="stepValues" class="step-one">
+  <div
+      v-for="(stepValue, index) in stepValues"
+      :key="index"
+      @click="selectItem(stepValue)"
+      :class="{selectedItem: isItemSelected(stepValue)}"
+      class="residence-card">
+    <img :src="require(`@/assets/stepOne/${stepValue.value}.svg`)" alt="cottage">
+    <div class="residence-name">{{ stepValue.text }}</div>
   </div>
 </div>
 </template>
 
 <script>
 export default {
-name: "StepOne"
+name: "StepOne",
+props: {
+    stepData: {
+      type: Object,
+      default: null
+    }
+  },
+  data: function ()  {
+    return {
+      selectedValue: null
+    }
+  },
+  methods: {
+  selectItem(val){
+    this.selectedValue = val;
+    const data = {
+      apiValue: this.selectedValue,
+      shortTitle: null,
+      shortValue: null
+    }
+
+    this.$emit('nextStep', this.selectedValue['next_screen'], data)
+  },
+    isItemSelected: function (val){
+      return this.selectedValue ? this.selectedValue.value === val.value : false
+    }
+  },
+  computed: {
+  stepValues: function (){
+    return this.stepData ? this.stepData.inputs[0].values : null;
+  }
+  }
 }
 </script>
 
@@ -28,6 +56,7 @@ name: "StepOne"
   display: flex;
   justify-content: center;
   .residence-card{
+    cursor: pointer;
     margin-right: 15px;
     height: 260px;
     box-sizing: border-box;
@@ -55,9 +84,14 @@ name: "StepOne"
       text-align: center;
     }
   }
+  .selectedItem{
+    .residence-name, img{
+      opacity: 1;
+    }
+  }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 830px) {
   .step-one{
     flex-wrap: wrap;
     .residence-card{
