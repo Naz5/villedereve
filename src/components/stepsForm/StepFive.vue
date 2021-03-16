@@ -156,6 +156,19 @@ name: "StepFive",
   }
 }
 
+@media screen and (max-width: 850px){
+  .step-five{
+    .edu-container {
+      .inputs-box {
+        .edu-box{
+          width: 110px !important;
+          height: 121px !important;
+        }
+      }
+    }
+  }
+}
+
 @media screen and (max-width: 470px) {
   .step-five{
     .edu-container {

@@ -4,18 +4,17 @@
         :options="paginated"
         v-model = "value"
         placeholder = "Code Postal"
-        :autocomplete="'on'"
         :filterable="false"
         :label="'search'"
         @open="onOpen"
         @close="onClose"
-        @search="query => this.search = query"
+        @search="onSearch"
     >
       <template #option="{ nom_riche, code_postal }">
         <div>{{code_postal}}, {{nom_riche}}</div>
       </template>
       <template #selected-option="{ nom_riche, code_postal }">
-        <div>{{truncateSelectedValue(`${code_postal}, ${nom_riche}`)}}</div>
+        <div style="font-family: 'Inter', serif; font-size: 16px; color: #2D4770;">{{truncateSelectedValue(`${code_postal}, ${nom_riche}`)}}</div>
       </template>
       <template #list-footer>
         <li ref="load" class="loader" v-show="hasNextPage">
@@ -49,6 +48,7 @@ export default {
     search: ''
   }),
   mounted () {
+    this.$refs["mySelect"].open = false;
     this.observer = new IntersectionObserver(this.infiniteScroll);
   },
   computed: {
@@ -63,8 +63,14 @@ export default {
     },
   },
   methods: {
+    onSearch(query){
+      const dropDown = document.querySelector('.vs__dropdown-menu');
+
+        dropDown.style.visibility = query.length >=3 ? 'visible' : 'hidden'
+      this.search = query
+    },
     truncateSelectedValue(val){
-      return truncateWithDots(val, 20)
+      return truncateWithDots(val, 15)
     },
     async onOpen () {
       if (this.hasNextPage) {
@@ -117,6 +123,11 @@ export default {
   ::v-deep .v-select{
     .vs__dropdown-menu{
      min-width: 250px;
+      visibility: hidden;
+    }
+    .vs__selected{
+      position: absolute;
+      top: 11px;
     }
   }
 

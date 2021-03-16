@@ -226,11 +226,14 @@ components:   {
   width: 100%;
   padding: 15px 190px 15px 70px;
   box-sizing: border-box;
-  background-image: url("../../assets/background_steps.svg");
+  background-image: url("../../assets/background_steps.png");
   background-repeat: no-repeat;
   background-position: bottom;
   background-size: cover;
   display: flex;
+  .steps-form-icons{
+    width: 115px;
+  }
   .steps-form-content{
     width: 100%;
     padding: 60px 15px;

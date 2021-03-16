@@ -7,10 +7,10 @@
                  :selectedValue="selectedValue"
       >
         <template v-slot:minSliderTemplate>
-          <div>{{ stepValues[0].text }}</div>
+          <div style="text-align: center">{{ stepValues[0].text }}</div>
         </template>
         <template v-slot:maxSliderTemplate>
-          <div>{{ stepValues[stepValues.length-1].text}}</div>
+          <div style="text-align: center">{{ stepValues[stepValues.length-1].text}}</div>
         </template>
       </VdrSlider>
     </div>
@@ -47,13 +47,12 @@ name: "StepTwo",
   },
   methods: {
     validateItem(){
-     const apiValue = this.stepValues.find(val => val.value === this.selectedValue);
-      if(!apiValue) return
+     const apiValue = this.stepValues.find(val => val.value === this.selectedValue) ?? null;
 
       const data = {
         apiValue,
         shortTitle: this.stepData['short_title'],
-        shortValue: apiValue.text
+        shortValue: apiValue ? apiValue.text : null
       }
 
       this.$emit('nextStep', 'screen_code_postal', data)
@@ -67,8 +66,9 @@ name: "StepTwo",
   mounted() {
     const initValue = this.passedStepData ?
         this.passedStepData.data.apiValue ?
-            this.passedStepData.data.apiValue.value: this.stepValues[0] :
-        this.stepValues[0];
+            this.passedStepData.data.apiValue.value: this.stepValues[0].value :
+        this.stepValues[0].value;
+
   this.selectedValue = initValue;
   this.$refs.vdrSlider.value = initValue;
   }

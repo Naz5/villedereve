@@ -10,13 +10,13 @@
         <template v-slot:minSliderTemplate>
           <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
             <img style="margin-bottom: 5px;" src="../../assets/stepEight/rainy.svg" alt="rainy">
-            <div style="font-size: 16px; font-family: 'Inter', serif; text-align: center">{{ stepValues[0].text }}</div>
+            <div style=" font-family: 'Inter', serif; text-align: center">{{ stepValues[0].text }}</div>
           </div>
         </template>
         <template v-slot:maxSliderTemplate>
           <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
             <img style="margin-bottom: 5px;" src="../../assets/stepEight/sun.svg" alt="sun">
-            <div  style="font-size: 16px; font-family: 'Inter', serif; text-align: center">{{ stepValues[stepValues.length-1].text}}</div>
+            <div  style=" font-family: 'Inter', serif; text-align: center">{{ stepValues[stepValues.length-1].text}}</div>
           </div>
         </template>
       </VdrSlider>
@@ -48,18 +48,17 @@ components: {
   },
   data: function ()  {
     return {
-      selectedValue: null,
+      selectedValue: null
     }
   },
   methods: {
     validateItem(){
-      const apiValue = this.stepValues.find(val => val.value === this.selectedValue);
-      if(!apiValue) return
+      const apiValue = this.stepValues.find(val => val.value === this.selectedValue) ?? null;
 
       const data = {
         apiValue,
         shortTitle: this.stepData['short_title'],
-        shortValue: apiValue.text
+        shortValue: apiValue ? apiValue.text : null
       }
 
       this.$emit('nextStep', this.stepData['next_screen'], data)
@@ -73,8 +72,8 @@ components: {
   mounted() {
     const initValue = this.passedStepData ?
         this.passedStepData.data.apiValue ?
-            this.passedStepData.data.apiValue.value: this.stepValues[0] :
-        this.stepValues[0];
+            this.passedStepData.data.apiValue.value: this.stepValues[0].value :
+        this.stepValues[0].value;
     this.selectedValue = initValue;
     this.$refs.vdrSlider.value = initValue;
   }
@@ -108,7 +107,7 @@ components: {
 @media screen and (max-width: 830px){
   .step-eight{
   .weather-slider{
-    margin: 20px 0;
+    margin: 60px 0;
   }
   .valid-btn{
     margin: 0 auto;

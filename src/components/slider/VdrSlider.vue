@@ -108,19 +108,38 @@ components: {
   font-family: 'Inter', serif;
   border-color: transparent;
   background-color: transparent;
+  white-space: pre-wrap;
+  width: 135px;
+
+  @media screen and (max-width: 1000px){
+    width: 100px;
+    font-size: 12px;
+    white-space: pre-wrap;
+  }
+  @media screen and (max-width: 380px){
+    width: 65px;
+  }
+  @media screen and (max-width: 280px){
+    width: 60px;
+  }
+}
+
+@media screen and (max-width: 1000px){
+  .vdr-slider{
+    .min-slider-val, .max-slider-val{
+      font-size: 12px !important;
+    }
+  }
 }
 
 @media screen and (max-width: 830px){
   .vdr-slider{
     .min-slider-val, .max-slider-val{
       min-width: auto;
-      font-size: 14px;
       text-align: center;
     }
   }
-  ::v-deep .vue-slider-dot-tooltip-inner{
-    font-size: 12px;
-  }
 }
+
 
 </style>

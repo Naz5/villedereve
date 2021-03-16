@@ -35,8 +35,8 @@ name: "StepFour",
       this.selectedValue = val;
       const data = {
         apiValue: this.selectedValue,
-        shortTitle: null,
-        shortValue: null
+        shortTitle: this.stepData['short_title'],
+        shortValue: this.selectedValue.text
       }
 
       this.$emit('nextStep', this.selectedValue['next_screen'], data)
