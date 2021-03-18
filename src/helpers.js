@@ -17,7 +17,6 @@ export function cutWords(array, max){
 
 
       })
-        console.log('result', result)
         return result
     }
     array.map((el, index) => {
@@ -27,7 +26,6 @@ export function cutWords(array, max){
         }
         result+= el.text;
     })
-    console.log('result', result)
     return result
 }
 

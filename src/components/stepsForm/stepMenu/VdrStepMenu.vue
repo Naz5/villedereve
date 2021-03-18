@@ -34,7 +34,7 @@ name: "VdrStepMenu",
   },
     methods: {
       showMenuItem(stepId){
-        return stepId !== 'accueil' && stepId !== 'screen_final'
+        return  stepId !== 'screen_final'
       }
     }
 }

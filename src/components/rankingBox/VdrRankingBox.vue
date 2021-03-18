@@ -100,7 +100,7 @@ name: "VdrRankingBox",
     align-items: center;
     justify-content: center;
     .rank-star:after{
-      content: "\2730";
+      content: "\2606";
       font-size: 20px;
       font-weight: bold;
       color: gold;

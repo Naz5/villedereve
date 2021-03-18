@@ -13,6 +13,9 @@
 </template>
 
 <script>
+
+import {truncateWithDots} from "@/helpers";
+
 export default {
 name: "StepOne",
 props: {
@@ -31,8 +34,8 @@ props: {
     this.selectedValue = val;
     const data = {
       apiValue: this.selectedValue,
-      shortTitle: null,
-      shortValue: null
+      shortTitle: this.stepData['short_title'],
+      shortValue: val ? truncateWithDots(val.text, 15) : null
     }
 
     this.$emit('nextStep', this.selectedValue['next_screen'], data)

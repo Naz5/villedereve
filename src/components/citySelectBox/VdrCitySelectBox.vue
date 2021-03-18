@@ -11,15 +11,10 @@
         @search="onSearch"
     >
       <template #option="{ nom_riche, code_postal }">
-        <div>{{code_postal}}, {{nom_riche}}</div>
+        <div style="font-family: 'Inter', serif; font-size: 15px; color: #2D4770;">{{code_postal}}, {{nom_riche}}</div>
       </template>
       <template #selected-option="{ nom_riche, code_postal }">
         <div style="font-family: 'Inter', serif; font-size: 16px; color: #2D4770;">{{truncateSelectedValue(`${code_postal}, ${nom_riche}`)}}</div>
-      </template>
-      <template #list-footer>
-        <li ref="load" class="loader" v-show="hasNextPage">
-          Loading more options...
-        </li>
       </template>
     </vSelect>
   </div>
@@ -48,7 +43,6 @@ export default {
     search: ''
   }),
   mounted () {
-    this.$refs["mySelect"].open = false;
     this.observer = new IntersectionObserver(this.infiniteScroll);
   },
   computed: {
@@ -75,7 +69,6 @@ export default {
     async onOpen () {
       if (this.hasNextPage) {
         await this.$nextTick();
-        this.observer.observe(this.$refs.load)
       }
     },
     onClose () {
@@ -122,7 +115,7 @@ export default {
 
   ::v-deep .v-select{
     .vs__dropdown-menu{
-     min-width: 250px;
+     min-width: 260px;
       visibility: hidden;
     }
     .vs__selected{

@@ -39,7 +39,6 @@ components: {
     return {
       value: null,
       formatter: v => {
-        console.log(v)
         const currentValue = this.sliderData.find(item => item.value === v )
         if(!currentValue) return
        return  v === this.sliderData[0].value || v === this.sliderData[this.sliderData.length - 1].value ?
