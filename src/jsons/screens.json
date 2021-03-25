@@ -319,18 +319,92 @@
       }
     ]
   },
+  "screen_preferences": {
+    "id":                 "screen_preferences",
+    "title":              "Je note ! Quels sont les éléments les plus importants pour vous ?",
+    "short_title":         "sélection des préférences",
+    "type":               "ranking",
+    "validation_button" :  1,
+    "why":            "Nous vous posons cette question afin de hierarchiser les communes où vous pourriez vous  plaire.",
+    "next_screen" :        "screen_filtre",
+    "inputs":[
+      {
+        "id":         "sécurity",
+        "text":       "La sécurité",
+        "order":      "",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "accessibility",
+        "text":       "L'accessibilité",
+        "order":      "",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "cadre_naturel",
+        "text":       "Le cadre naturel",
+        "order":      "",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "dynamisme_festif",
+        "text":       "Le dynamisme festif",
+        "order":      "",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "dynamisme_culturel",
+        "text":       "Le dynamisme culturel",
+        "order":      "",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "activity_economique",
+        "text":       "L'activité économique",
+        "order":      "",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "meteo",
+        "text":       "La météo",
+        "order":      "",
+        "type":       "ranking",
+        "traitement": "score",
+        "operation":  "=",
+        "value":      1
+      }
+    ]
+  },
  "screen_filtre": {
     "id":                 "screen_filtre",
-    "title":              "Avez-vous des préférences ?",
-    "short_title":         "Divers",
+    "title":              "Nous avons déjà une petite idée de ce qui vous conviendrait. Souhaitez-vous affiner votre recherche en ajoutant des filtres sur les éléments suivants ?",
+   "short_title":         "",
     "type":               "checkbox",
     "validation_button" :  1,
-    "why":            "...",
+    "why":            "",
     "next_screen" :        "screen_final",
     "inputs":[
       {
-        "id":         "isParcNational",
-        "text":       "Dans un parc national",
+        "id":         "allergies",
+        "text":       "Je suis très sensible aux allergies",
         "order":      "",
         "type":       "checkbox",
         "traitement": "filtre",
@@ -338,8 +412,8 @@
         "value":      1
       },
       {
-        "id":         "isPBVDF",
-        "text":       "Plus beau village de France uniquement",
+        "id":         "air_pollution",
+        "text":       "La pollution de l'air, c'est terminé pour moi",
         "order":      "",
         "type":       "checkbox",
         "traitement": "filtre",
@@ -347,8 +421,8 @@
         "value":      1
       },
       {
-        "id":         "isFastInternet",
-        "text":       "Super internet de fou",
+        "id":         "sol_pollution",
+        "text":       "La pollution des sols, c'est non",
         "order":      "",
         "type":       "checkbox",
         "traitement": "filtre",
@@ -356,8 +430,26 @@
         "value":      1
       },
       {
-        "id":         "isTempsDeChiotte",
-        "text":       "Temps de chiotte",
+        "id":         "risques_industriels",
+        "text":       "Les risques industriels, pas pour moi",
+        "order":      "",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "inondation",
+        "text":       "Inondation, pas question",
+        "order":      "",
+        "type":       "checkbox",
+        "traitement": "filtre",
+        "operation":  "=",
+        "value":      1
+      },
+      {
+        "id":         "internet",
+        "text":       "4G et Fibre, c'est une nécessité",
         "order":      "",
         "type":       "checkbox",
         "traitement": "filtre",

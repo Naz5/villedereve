@@ -6,10 +6,11 @@
     <div class="vue-slider-container">
       <VueSlider
           v-model="value"
-          :data="sliderData"
+          :data="definedValue ? undefined : sliderData"
           :data-value="'value'"
           :marks="false"
-          :tooltip="'always'"
+          :disabled="!!definedValue"
+          :tooltip="definedValue ? 'none' : 'always'"
           :tooltip-placement="'bottom'"
           :tooltip-formatter="formatter"
       />
@@ -33,12 +34,19 @@ components: {
     sliderData: {
       type: Array,
       default: null
+    },
+    definedValue: {
+      type: Number,
+      default: null
     }
   },
   data () {
     return {
-      value: null,
+      value: this.definedValue ?? null,
       formatter: v => {
+        if(this.definedValue){
+          return v
+        }
         const currentValue = this.sliderData.find(item => item.value === v )
         if(!currentValue) return
        return  v === this.sliderData[0].value || v === this.sliderData[this.sliderData.length - 1].value ?
@@ -50,7 +58,12 @@ components: {
   value: function (val){
     this.$emit('valueChanged', val)
   }
-  }
+  },
+  // computed: {
+  // clcValue: function (){
+  //   return this.definedValue ?? this.value
+  // }
+  // }
 }
 </script>
 
@@ -63,7 +76,6 @@ components: {
     width: 100%;
   }
   .min-slider-val, .max-slider-val{
-    min-width: 120px;
     color: $dark-blue-gray-color;
     font-size: 18px;
     font-family: 'Josefin', serif;

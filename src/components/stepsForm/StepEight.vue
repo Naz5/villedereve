@@ -8,13 +8,13 @@
           :selectedValue="selectedValue"
       >
         <template v-slot:minSliderTemplate>
-          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;min-width: 120px;">
             <img style="margin-bottom: 5px;" src="../../assets/stepEight/rainy.svg" alt="rainy">
             <div style=" font-family: 'Inter', serif; text-align: center">{{ stepValues[0].text }}</div>
           </div>
         </template>
         <template v-slot:maxSliderTemplate>
-          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+          <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;min-width: 120px;">
             <img style="margin-bottom: 5px;" src="../../assets/stepEight/sun.svg" alt="sun">
             <div  style=" font-family: 'Inter', serif; text-align: center">{{ stepValues[stepValues.length-1].text}}</div>
           </div>

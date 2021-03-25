@@ -139,11 +139,11 @@ components:   {
           component: StepEight
         },
         {
-          id: 'screen_filtre',
+          id: 'screen_preferences',
           component: StepNine
         },
         {
-          id: 'screen_final',
+          id: 'screen_filtre',
           component: StepTen
         }
       ],
@@ -157,6 +157,7 @@ components:   {
       this.currentStepIndex = this.getStepIndexById(backStepId);
     },
     nextStep(nextStepId = null, data = null)  {
+
       let alreadyPassedStepIndex = this.passedSteps
           .findIndex(step => step.id === this.steps[this.currentStepIndex].id);
 
@@ -172,6 +173,11 @@ components:   {
       } else {
         this.passedSteps.push(this.getPassedStep(data ?? skippedData))
 
+      }
+
+      if(nextStepId === 'results'){
+        this.$router.push({ name: 'results', params: {passedSteps: this.passedSteps}})
+        return
       }
 
       const nextStepIndex = nextStepId ? this.getStepIndexById(nextStepId) : this.currentStepIndex+1;

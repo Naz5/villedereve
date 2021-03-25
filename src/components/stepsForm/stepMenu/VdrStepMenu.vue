@@ -1,11 +1,11 @@
 <template>
-<div v-if="passedSteps.length" class="vdr-step-menu" :class="{rowDirection: rowDirection}">
+<div v-if="passedSteps && passedSteps.length" class="vdr-step-menu" :class="{rowDirection: rowDirection, resultingStepMenu: !currentStep}">
   <div v-for="(step, index) in passedSteps" :key="index">
     <div
         v-if="showMenuItem(step.id)"
-        @click="$emit('goBack', step.id)"
+        @click=" $emit('goBack', step.id)"
         class="step-menu-item"
-        :class="{activeMenuItem: currentStep.id === step.id}"
+        :class="{activeMenuItem: !currentStep || currentStep.id === step.id}"
     >
       <img :src="require(`@/assets/menuIcons/${step.id}.svg`)" alt="menuIcon">
       <div v-if="step.data.shortTitle" class="step-short-name">{{ step.data.shortTitle }}</div>
@@ -34,7 +34,7 @@ name: "VdrStepMenu",
   },
     methods: {
       showMenuItem(stepId){
-        return  stepId !== 'screen_final'
+        return  stepId !== 'screen_filtre'
       }
     }
 }
@@ -82,6 +82,16 @@ name: "VdrStepMenu",
   .step-menu-item{
     margin-right: 20px;
     width: 100px;
+  }
+}
+
+.resultingStepMenu{
+  margin: 15px 0;
+  width: auto;
+  justify-content: normal;
+  .step-menu-item{
+    margin: 0 1px 10px 0;
+    width: 80px;
   }
 }
 </style>

@@ -1,0 +1,142 @@
+{
+	"code": 200,
+	"status": "success",
+	"error": "",
+	"count_regions": 3,
+	"count_cities": 0,
+	"results": [{
+		"title": "Annecy et sa région",
+		"subtitle": "Une région trop bien et trop cool",
+		"text": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut ullamcorper euismod pellentesque. Curabitur accumsan tellus vel justo feugiat convallis. Vivamus ornare, velit et faucibus viverra, justo metus porta ipsum, ut lobortis nisl eros blandit lacus. Suspendisse potenti. Duis eget nunc blandit, rhoncus nunc sit amet, tristique ex. Fusce egestas elit sed felis luctus, ac iaculis odio interdum",
+		"ranking": 1,
+		"score": 0.97,
+		"criteria": 8,
+		"pictures": [
+			{
+				"name": "Le marché",
+				"desc": "Annecy a un très beau marché",
+				"urls": {
+					"desktop": {
+						"thumbnail": "/",
+						"medium": "/",
+						"large": "/"
+					},
+					"tablet": {
+						"thumbnail": "/",
+						"medium": "/",
+						"large": "/"
+					},
+					"mobile": {
+						"thumbnail": "/",
+						"medium": "/",
+						"large": "/"
+					}
+				}
+			},
+			{
+				"name": "",
+				"desc": "",
+				"url": ""
+			},
+			{
+				"name": "",
+				"desc": "",
+				"url": ""
+			}
+		],
+		"main_attributes": [
+			{
+				"name": "Lac",
+				"desc": "Annecy a un très beau lac",
+				"icon": "lake"
+			},
+			{
+				"name": "Montagne",
+				"desc": "Annecy est près de la montagne",
+				"icon": "mountain"
+			},
+			{
+				"name": "Forêt",
+				"desc": "Annecy et sa région ont une belle forêt",
+				"icon": "forest"
+			},
+			{
+				"name": "Vivant",
+				"desc": "Annecy est très dynamique",
+				"icon": "dynamic"
+			}
+		],
+		"scores": [
+			{
+				"name": "distance",
+				"desc": "Distance depuis votre domicile",
+				"value": 0.98
+			},
+			{
+				"name": "meteo",
+				"desc": "Météo",
+				"value": 0.92
+			},
+			{
+				"name": "securite",
+				"desc": "Sécurité",
+				"value": 0.78
+			}
+		],
+		"cities": [
+			{
+				"code_insee": "01526",
+				"code_postal": "01520",
+				"name": "Annecy",
+				"score": 100,
+				"price": 1200,
+				"population": 10000,
+				"desc": "Distance depuis votre domicile"
+			},
+			{
+				"code_insee": "01526",
+				"code_postal": "01520",
+				"name": "Annecy",
+				"score": 100,
+				"price": 1200,
+				"population": 10000,
+				"desc": "Distance depuis votre domicile"
+			},
+			{
+				"code_insee": "01526",
+				"code_postal": "01520",
+				"name": "Annecy",
+				"score": 100,
+				"price": 1200,
+				"population": 10000,
+				"desc": "Distance depuis votre domicile"
+			}
+		],
+		"properties_count": 16,
+		"properties": [
+			{
+				"id": "123456_annecy",
+				"type": "Propriété",
+				"city": "Annecy",
+				"price": 13750000,
+				"room": "16",
+				"chamber": "12",
+				"size": "1430",
+				"url": "",
+				"picture": ""
+			},
+			{
+				"id": "123456_annecy",
+				"type": "Propriété",
+				"city": "Paris",
+				"price": 13750000,
+				"room": "16",
+				"chamber": "12",
+				"size": "1430",
+				"url": "",
+				"picture": ""
+			}
+		]
+
+	}]
+}

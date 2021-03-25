@@ -7,10 +7,10 @@
                  :selectedValue="selectedValue"
       >
         <template v-slot:minSliderTemplate>
-          <div style="text-align: center">{{ stepValues[0].text }}</div>
+          <div style="text-align: center; min-width: 120px;">{{ stepValues[0].text }}</div>
         </template>
         <template v-slot:maxSliderTemplate>
-          <div style="text-align: center">{{ stepValues[stepValues.length-1].text}}</div>
+          <div style="text-align: center; min-width: 120px;">{{ stepValues[stepValues.length-1].text}}</div>
         </template>
       </VdrSlider>
     </div>
