@@ -82,6 +82,7 @@ import StepTen from "@/components/stepsForm/StepTen";
 
 import Screens from '../../jsons/screens.json';
 import VdrStepMenu from "@/components/stepsForm/stepMenu/VdrStepMenu.vue";
+import {EventBus} from "@/EventBus";
 
 export default {
 
@@ -218,6 +219,10 @@ components:   {
   }
   },
   mounted() {
+  EventBus.$on('goBackToStep', (data) => {
+    this.goBack(data.stepId);
+    this.passedSteps = data.passedSteps
+  })
     this.getScreenData()
   }
 }

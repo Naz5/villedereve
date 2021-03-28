@@ -6,10 +6,11 @@
     <VdrStepMenu
         :rowDirection="true"
         :passedSteps="passedSteps"
+        @goBack="goBackToSteps"
     />
     <div class="results-list">
       <div v-for="(resultItem, index) in resultsData" :key="index" class="results-item">
-        <div class="main-info">
+        <div @click="toggleResultItem" class="main-info">
           <div class="main-info-img">
             <div class="result-badge">
               <div class="text">
@@ -19,10 +20,13 @@
               <img src="../../assets/results/bedg.png" alt="">
             </div>
             <VueSlickCarousel :arrows="false" :draggable="false" :dots="true">
-              <img src="../../assets/results/mainImage.png" alt="">
-              <img src="../../assets/results/mainImage.png" alt="">
-              <img src="../../assets/results/mainImage.png" alt="">
-              <img src="../../assets/results/mainImage.png" alt="">
+              <img
+                  v-for="(picture, index) in resultItem.pictures"
+                  :key="index"
+                  v-img="{src: picture.urls.large}"
+                  :src="picture.urls.thumbnail"
+                  alt=""
+              >
             </VueSlickCarousel>
           </div>
           <div class="main-info-text">
@@ -37,86 +41,88 @@
             </div>
           </div>
         </div>
-        <div class="shadow-box">
-          <div class="header">
-            <div class="title"> Détails du score de {{calcPercentage(resultItem.score)}}% et de vos {{ resultItem.criteria }} critères</div>
-            <img @click="toggleShadowBox" src="../../assets/results/arrowUp.svg" alt="">
-          </div>
-          <div class="shadow-box-container">
-            <div class="details-items-container">
-              <div class="details-items-part">
-                <div v-for="(score, index) in resultItem.scores.filter((s,i) => i%2 === 0)" :key="index"  class="details-item">
-                  <VdrSlider :definedValue="calcPercentage(score.value)">
-                    <template v-slot:maxSliderTemplate>
-                      <div style="margin-left: 25px; min-width: 195px; font-family: 'Inter', serif; font-size: 12px">
-                        {{score.desc}}
-                      </div>
-                    </template>
-                  </VdrSlider>
+        <div class="result-details">
+          <div class="shadow-box">
+            <div class="header">
+              <div class="title"> Détails du score de {{calcPercentage(resultItem.score)}}% et de vos {{ resultItem.criteria }} critères</div>
+              <img @click="toggleShadowBox" src="../../assets/results/arrowUp.svg" alt="">
+            </div>
+            <div class="shadow-box-container">
+              <div class="details-items-container">
+                <div class="details-items-part">
+                  <div v-for="(score, index) in resultItem.scores.filter((s,i) => i%2 === 0)" :key="index"  class="details-item">
+                    <VdrSlider :definedValue="calcPercentage(score.value)">
+                      <template v-slot:maxSliderTemplate>
+                        <div style="margin-left: 25px; min-width: 195px; font-family: 'Inter', serif; font-size: 12px">
+                          {{score.desc}}
+                        </div>
+                      </template>
+                    </VdrSlider>
+                  </div>
                 </div>
-              </div>
-              <div class="details-items-part">
-                <div v-for="(score, index) in resultItem.scores.filter((s,i) => i%2 !== 0)" :key="index" class="details-item">
-                  <VdrSlider :definedValue="calcPercentage(score.value)">
-                    <template v-slot:maxSliderTemplate>
-                      <div style="margin-left: 25px; min-width: 195px; font-family: 'Inter', serif; font-size: 12px">
-                        {{score.desc}}
-                      </div>
-                    </template>
-                  </VdrSlider>
+                <div class="details-items-part">
+                  <div v-for="(score, index) in resultItem.scores.filter((s,i) => i%2 !== 0)" :key="index" class="details-item">
+                    <VdrSlider :definedValue="calcPercentage(score.value)">
+                      <template v-slot:maxSliderTemplate>
+                        <div style="margin-left: 25px; min-width: 195px; font-family: 'Inter', serif; font-size: 12px">
+                          {{score.desc}}
+                        </div>
+                      </template>
+                    </VdrSlider>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="shadow-box">
-          <div class="header">
-            <div class="title">{{resultItem.cities.length}} communes idéales pour vous !</div>
-            <img @click="toggleShadowBox" src="../../assets/results/arrowUp.svg" alt="">
-          </div>
-          <div class="shadow-box-container">
-            <div class="communes-container">
-              <div class="table">
-                <table>
-                  <tr class="header-row">
-                    <th>Ville</th>
-                    <th>Score</th>
-                    <th>Prix au m2 moyen</th>
-                    <th>Habitant</th>
-                  </tr>
-                  <tr v-for="(city, index) in resultItem.cities" :key="index">
-                    <td>{{ city.name }}</td>
-                    <td>{{ city.score }}</td>
-                    <td>{{ city.price }}€/m2</td>
-                    <td>{{ numberWithSpaces(city.population) }}</td>
-                  </tr>
-                </table>
-              </div>
-              <div class="map">
-                <img src="../../assets/results/map.png" alt="">
+          <div class="shadow-box">
+            <div class="header">
+              <div class="title">{{resultItem.cities.length}} communes idéales pour vous !</div>
+              <img @click="toggleShadowBox" src="../../assets/results/arrowUp.svg" alt="">
+            </div>
+            <div class="shadow-box-container">
+              <div class="communes-container">
+                <div class="table">
+                  <table>
+                    <tr class="header-row">
+                      <th>Ville</th>
+                      <th>Score</th>
+                      <th>Prix au m2 moyen</th>
+                      <th>Habitant</th>
+                    </tr>
+                    <tr v-for="(city, index) in resultItem.cities" :key="index">
+                      <td>{{ city.name }}</td>
+                      <td>{{ city.score }}</td>
+                      <td>{{ city.price }}€/m2</td>
+                      <td>{{ numberWithSpaces(city.population) }}</td>
+                    </tr>
+                  </table>
+                </div>
+                <div class="map">
+                  <img src="../../assets/results/map.png" alt="">
+                </div>
               </div>
             </div>
-          </div>
 
-        </div>
-        <div class="shadow-box">
-          <div class="header">
-            <div class="title">{{ resultItem.properties_count }} biens disponibles à l’achat dans cette région</div>
-            <img @click="toggleShadowBox" src="../../assets/results/arrowUp.svg" alt="">
           </div>
-          <div class="shadow-box-container">
-            <div class="purchases">
-              <div v-for="(property, index) in resultItem.properties" :key="index" class="purchase-box">
-                <img src="../../assets/results/parch.png" alt="">
-                <div class="img-main-info">
-                  <div class="name">{{ property.type }} | {{ property.city }} </div>
-                  <div class="price">{{numberWithSpaces(property.price)}} €</div>
+          <div class="shadow-box">
+            <div class="header">
+              <div class="title">{{ resultItem.properties_count }} biens disponibles à l’achat dans cette région</div>
+              <img @click="toggleShadowBox" src="../../assets/results/arrowUp.svg" alt="">
+            </div>
+            <div class="shadow-box-container">
+              <div class="purchases">
+                <div v-for="(property, index) in resultItem.properties" :key="index" class="purchase-box">
+                  <img :src="property.picture" alt="">
+                  <div class="img-main-info">
+                    <div class="name">{{ property.type }} | {{ property.city }} </div>
+                    <div class="price">{{numberWithSpaces(property.price)}} €</div>
+                  </div>
+                  <div class="img-details">{{ property.room }} Pièces  •  {{ property.chamber }} Chambres  •  {{numberWithSpaces(property.size)}} m2</div>
                 </div>
-                <div class="img-details">{{ property.room }} Pièces  •  {{ property.chamber }} Chambres  •  {{numberWithSpaces(property.size)}} m2</div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
       </div>
     </div>
@@ -152,10 +158,11 @@ import Results from "@/jsons/results.json"
 import VdrMenu from "@/components/menu/VdrMenu";
 import VdrStepMenu from "@/components/stepsForm/stepMenu/VdrStepMenu.vue";
 import VdrSlider from "@/components/slider/VdrSlider";
-import VueSlickCarousel from 'vue-slick-carousel'
+import VueSlickCarousel from 'vue-slick-carousel';
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 // optional style for arrows & dots
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
+import {EventBus} from "@/EventBus";
 
 export default {
 name: "Results",
@@ -178,6 +185,26 @@ name: "Results",
       shadowBoxContainer.style.display = shadowBoxContainer.style.display === 'none' ? 'block' : 'none';
       arrow.style.transform = arrow.style.transform === 'rotate(180deg)' ? 'initial' : 'rotate(180deg)';
     },
+    toggleResultItem: function (e){
+     const resultItems = document.getElementsByClassName('results-item');
+
+      Array.from(resultItems).map(item => {
+        const mainInfoBox = item.querySelector('.main-info');
+        if(item === e.target.closest('.results-item')){
+          mainInfoBox.style.cursor = 'auto';
+          item.querySelector('.result-details').style.display = 'block';
+          window.scrollTo(0, mainInfoBox.offsetTop - 110);
+          return
+        }
+        item.querySelector('.main-info').style.cursor = 'pointer';
+        item.querySelector('.result-details').style.display = 'none';
+      })
+    },
+    goBackToSteps: function (stepId){
+      this.$router.push({ name: 'steps'}).then(() => {
+        EventBus.$emit('goBackToStep', {stepId, passedSteps: this.passedSteps})
+      })
+    },
     calcPercentage: function (val){
         return val*100
     },
@@ -187,12 +214,20 @@ name: "Results",
   },
   mounted(){
     this.resultsData = Results.results;
+    this.$nextTick(() => {
+      document.querySelector('.main-info').style.visibility = 'visible';
+      document.querySelector('.result-details').style.display = 'block';
+    })
   }
 }
 </script>
 
 <style lang="scss" scoped>
 @import "../../styles/variables";
+
+::v-deep .slick-dots li button:before{
+  font-size: 14px !important;
+}
 
 .results-container{
   color: $dark-blue-gray-color;
@@ -210,6 +245,7 @@ name: "Results",
   .results-list{
     .results-item{
       .main-info{
+        cursor: pointer;
         display: flex;
         margin-bottom: 20px;
         .main-info-img{
@@ -267,6 +303,9 @@ name: "Results",
             }
           }
         }
+      }
+      .result-details{
+        display: none;
       }
       .shadow-box{
         padding: 20px;
