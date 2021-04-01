@@ -7,7 +7,9 @@
       <p>Un jardin à la campagne, une vue sur mer, un chalet au grand air.... Dites nous  ce qui vous fait rêver,
         nous vous proposerons la ville qui vous correspond le  mieux.
       </p>
-      <div class="find-button" @click="$router.push({ name: 'steps' })">Trouver ma ville de reve</div>
+      <router-link to="/steps">
+        <div class="find-button">Trouver ma ville de reve</div>
+      </router-link>
     </div>
   </div>
 </div>

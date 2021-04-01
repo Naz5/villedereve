@@ -10,7 +10,7 @@
     />
     <div class="results-list">
       <div v-for="(resultItem, index) in resultsData" :key="index" class="results-item">
-        <div @click="toggleResultItem" class="main-info">
+        <div class="main-info">
           <div class="main-info-img">
             <div class="result-badge">
               <div class="text">
@@ -39,6 +39,7 @@
                 <div class="name">{{ attribute.name }}</div>
               </div>
             </div>
+            <div @click="toggleResultDetails" class="see-details-btn">Voir les détails</div>
           </div>
         </div>
         <div class="result-details">
@@ -185,20 +186,16 @@ name: "Results",
       shadowBoxContainer.style.display = shadowBoxContainer.style.display === 'none' ? 'block' : 'none';
       arrow.style.transform = arrow.style.transform === 'rotate(180deg)' ? 'initial' : 'rotate(180deg)';
     },
-    toggleResultItem: function (e){
-     const resultItems = document.getElementsByClassName('results-item');
+    toggleResultDetails: function (e){
+     const resultDetails = e.target.closest('.results-item').querySelector('.result-details');
+     if(resultDetails.style.display === 'block'){
+       resultDetails.style.display = 'none';
+       e.target.innerText = 'Voir les détails';
+       return
+     }
 
-      Array.from(resultItems).map(item => {
-        const mainInfoBox = item.querySelector('.main-info');
-        if(item === e.target.closest('.results-item')){
-          mainInfoBox.style.cursor = 'auto';
-          item.querySelector('.result-details').style.display = 'block';
-          window.scrollTo(0, mainInfoBox.offsetTop - 110);
-          return
-        }
-        item.querySelector('.main-info').style.cursor = 'pointer';
-        item.querySelector('.result-details').style.display = 'none';
-      })
+      resultDetails.style.display = 'block';
+      e.target.innerText = 'Masquer les détails';
     },
     goBackToSteps: function (stepId){
       this.$router.push({ name: 'steps'}).then(() => {
@@ -214,10 +211,11 @@ name: "Results",
   },
   mounted(){
     this.resultsData = Results.results;
-    this.$nextTick(() => {
-      document.querySelector('.main-info').style.visibility = 'visible';
-      document.querySelector('.result-details').style.display = 'block';
-    })
+    //Uncomment if you need first result to be opened by default
+    // this.$nextTick(() => {
+    //   document.querySelector('.results-item .see-details-btn').innerText = 'Masquer les détails';
+    //   document.querySelector('.result-details').style.display = 'block';
+    // })
   }
 }
 </script>
@@ -245,7 +243,6 @@ name: "Results",
   .results-list{
     .results-item{
       .main-info{
-        cursor: pointer;
         display: flex;
         margin-bottom: 20px;
         .main-info-img{
@@ -301,6 +298,19 @@ name: "Results",
                 font-size: 12px;
               }
             }
+          }
+          .see-details-btn{
+            cursor: pointer;
+            width: 190px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            background-color: $coral-color;
+            font-family: 'Josefin', serif;
+            border-radius: 25px;
+            margin: 15px auto;
           }
         }
       }

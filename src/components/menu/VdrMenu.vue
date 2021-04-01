@@ -1,10 +1,12 @@
 <template>
     <div id="menu" class="vdr-menu" :class="[menuStyle === 'white' ? 'vdr-white-menu' : 'vdr-blue-menu']">
       <div v-if="!isMobMenuOpened" class="menu-content">
-        <div @click="$router.push({ name: 'home' })" class="menu-logo">
-          <img v-if="menuStyle === 'white'" src="../../assets/logo-blue-light.svg" alt="Logo-blue-light">
-          <img v-else src="../../assets/logo-white.svg" alt="Logo-blue-light">
-        </div>
+        <router-link to="/">
+          <div class="menu-logo">
+            <img v-if="menuStyle === 'white'" src="../../assets/logo-blue-light.svg" alt="Logo-blue-light">
+            <img v-else src="../../assets/logo-white.svg" alt="Logo-blue-light">
+          </div>
+        </router-link>
         <div class="menu-items">
           <div>Carte des allegies</div>
           <div>Les villes préférés des francais</div>

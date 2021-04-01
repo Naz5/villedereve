@@ -9,9 +9,7 @@
         @rankItem="(rank) => {rankItem(index, rank)}"
     />
   </div>
-  <div @click="validateStep">
-    <VdrValidateBtn class="validate-btn"/>
-  </div>
+    <VdrValidateBtn @validate="validateStep" class="validate-btn"/>
 </div>
 </template>
 

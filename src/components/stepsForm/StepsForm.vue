@@ -22,11 +22,13 @@
           </div>
           <div class="question-item">
             <div class="question-inputs">
+              <transition name="fade">
               <component
                   :is="steps[currentStepIndex].component"
                   v-bind="{stepData: currentScreenData, passedStepData: currentPassedStep}"
                   @nextStep="nextStep"
               />
+              </transition>
             </div>
             <div v-if="currentStepIndex !== steps.length-1" @click="nextStep()" class="question-next-btn nex-btn">
               <div>
@@ -230,6 +232,15 @@ components:   {
 
 <style lang="scss" scoped>
 @import "../../styles/variables";
+
+//.fade-enter-active, .fade-leave-active {
+//  transition-property: opacity;
+//  transition-duration: .35s;
+//}
+//
+//.fade-enter, .fade-leave-active {
+//  opacity: 0
+//}
 
 .steps-form-container{
   min-height: calc(100vh - 90px);

@@ -19,9 +19,7 @@
       </div>
     </div>
   </div>
-  <div @click="validateStep">
-    <VdrValidateBtn class="validate-btn"/>
-  </div>
+    <VdrValidateBtn @validate="validateStep" class="validate-btn"/>
 </div>
 </template>
 

@@ -5,9 +5,7 @@
                     ref="citySelectBox"
                     @valueChanged="(val) => this.selectedValue = val"/>
 </div>
-  <div @click="validateItem">
-    <VdrValidateBtn class="valid-btn"/>
-  </div>
+    <VdrValidateBtn @validate="validateItem" class="valid-btn"/>
 </div>
 </template>
 

@@ -1,5 +1,5 @@
 <template>
-<div class="vdr-validate-btn">Valider</div>
+<div @click="$emit('validate')" class="vdr-validate-btn" v-bind="$attrs" >Valider</div>
 </template>
 
 <script>
