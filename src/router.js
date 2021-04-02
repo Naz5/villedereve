@@ -19,6 +19,7 @@ const router = new Router({
             component: StepsForm,
             name: 'steps',
             path: '/steps',
+            props: true
         },
         {
             component: Results,

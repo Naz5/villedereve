@@ -163,7 +163,6 @@ import VueSlickCarousel from 'vue-slick-carousel';
 import 'vue-slick-carousel/dist/vue-slick-carousel.css'
 // optional style for arrows & dots
 import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css'
-import {EventBus} from "@/EventBus";
 
 export default {
 name: "Results",
@@ -198,9 +197,8 @@ name: "Results",
       e.target.innerText = 'Masquer les détails';
     },
     goBackToSteps: function (stepId){
-      this.$router.push({ name: 'steps'}).then(() => {
-        EventBus.$emit('goBackToStep', {stepId, passedSteps: this.passedSteps})
-      })
+    const dataFromResults =  {stepId, passedSteps: this.passedSteps}
+      this.$router.push({ name: 'steps', params:{ dataFromResults: dataFromResults}})
     },
     calcPercentage: function (val){
         return val*100
@@ -211,11 +209,11 @@ name: "Results",
   },
   mounted(){
     this.resultsData = Results.results;
-    //Uncomment if you need first result to be opened by default
-    // this.$nextTick(() => {
-    //   document.querySelector('.results-item .see-details-btn').innerText = 'Masquer les détails';
-    //   document.querySelector('.result-details').style.display = 'block';
-    // })
+    // if you need first result to be opened by default
+    this.$nextTick(() => {
+      document.querySelector('.results-item .see-details-btn').innerText = 'Masquer les détails';
+      document.querySelector('.result-details').style.display = 'block';
+    })
   }
 }
 </script>
@@ -242,6 +240,9 @@ name: "Results",
   }
   .results-list{
     .results-item{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       .main-info{
         display: flex;
         margin-bottom: 20px;
